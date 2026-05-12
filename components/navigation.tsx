@@ -42,7 +42,7 @@ export function Navigation() {
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2">
               <span className="font-sans text-2xl font-semibold tracking-wide text-foreground">
-                Luxe Nails
+                Elegance
               </span>
             </Link>
 
@@ -62,11 +62,11 @@ export function Navigation() {
             {/* Desktop CTA */}
             <div className="hidden items-center gap-4 md:flex">
               <a
-                href="tel:+1234567890"
+                href="tel:+16309611111"
                 className="flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-primary"
               >
                 <Phone className="h-4 w-4" />
-                <span className="font-sans">(123) 456-7890</span>
+                <span className="font-sans">(630) 961-1111</span>
               </a>
               <Button asChild className="rounded-full px-6">
                 <Link href="/booking">Book Appointment</Link>
@@ -123,11 +123,11 @@ export function Navigation() {
                 className="mt-4 flex flex-col items-center gap-4"
               >
                 <a
-                  href="tel:+1234567890"
+                  href="tel:+16309611111"
                   className="flex items-center gap-2 text-muted-foreground"
                 >
                   <Phone className="h-5 w-5" />
-                  <span>(123) 456-7890</span>
+                  <span>(630) 961-1111</span>
                 </a>
                 <a
                   href="#locations"

@@ -7,73 +7,6 @@ import { Button } from "@/components/ui/button"
 import { Clock, ArrowRight } from "lucide-react"
 import type { Service } from "@/lib/types"
 
-const fallbackServices = [
-  {
-    id: 1,
-    name: "Luxury Manicure",
-    description: "Classic nail shaping, cuticle care, and polish application with premium products.",
-    duration: "45 min",
-    price: "$45",
-    image: "https://images.unsplash.com/photo-1604654894610-df63bc536371?w=400&q=80",
-  },
-  {
-    id: 2,
-    name: "Spa Pedicure",
-    description: "Relaxing foot soak, exfoliation, massage, and perfect polish finish.",
-    duration: "60 min",
-    price: "$65",
-    image: "https://images.unsplash.com/photo-1519014816548-bf5fe059798b?w=400&q=80",
-  },
-  {
-    id: 3,
-    name: "Gel Nails",
-    description: "Long-lasting gel polish with chip-free shine that lasts up to 3 weeks.",
-    duration: "75 min",
-    price: "$75",
-    image: "https://images.unsplash.com/photo-1607779097040-26e80aa78e66?w=400&q=80",
-  },
-  {
-    id: 4,
-    name: "Acrylic Extensions",
-    description: "Custom nail extensions with durable acrylic for length and strength.",
-    duration: "90 min",
-    price: "$95",
-    image: "https://images.unsplash.com/photo-1632345031435-8727f6897d53?w=400&q=80",
-  },
-  {
-    id: 5,
-    name: "Nail Art",
-    description: "Express your style with intricate designs, patterns, and embellishments.",
-    duration: "30+ min",
-    price: "From $25",
-    image: "https://images.unsplash.com/photo-1571290274554-6a2eaa771e5f?w=400&q=80",
-  },
-  {
-    id: 6,
-    name: "Spa Treatment",
-    description: "Complete pampering with hot stone massage, masks, and aromatherapy.",
-    duration: "90 min",
-    price: "$120",
-    image: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=400&q=80",
-  },
-  {
-    id: 7,
-    name: "Waxing Services",
-    description: "Gentle and effective hair removal with premium wax formulas.",
-    duration: "15-45 min",
-    price: "From $20",
-    image: "https://images.unsplash.com/photo-1560750588-73207b1ef5b8?w=400&q=80",
-  },
-  {
-    id: 8,
-    name: "Eyelash Extensions",
-    description: "Beautiful, natural-looking lash extensions for stunning eyes.",
-    duration: "120 min",
-    price: "$150",
-    image: "https://images.unsplash.com/photo-1583001809873-a128495da465?w=400&q=80",
-  },
-]
-
 interface ServicesSectionProps {
   services?: Service[]
 }
@@ -87,17 +20,14 @@ function formatDuration(duration: number) {
 }
 
 export function ServicesSection({ services: apiServices = [] }: ServicesSectionProps) {
-  const services =
-    apiServices.length > 0
-      ? apiServices.slice(0, 8).map((service) => ({
-          id: service.id,
-          name: service.name,
-          description: service.description ?? "Premium nail care service.",
-          duration: formatDuration(service.duration),
-          price: formatPrice(service.price),
-          image: service.image ?? "/placeholder.jpg",
-        }))
-      : fallbackServices
+  const services = apiServices.slice(0, 8).map((service) => ({
+    id: service.id,
+    name: service.name,
+    description: service.description ?? "Premium nail care service.",
+    duration: formatDuration(service.duration),
+    price: formatPrice(service.price),
+    image: service.image ?? "/placeholder.jpg",
+  }))
 
   return (
     <section className="py-24 bg-background" id="services">
@@ -123,8 +53,9 @@ export function ServicesSection({ services: apiServices = [] }: ServicesSectionP
         </motion.div>
 
         {/* Services Grid */}
-        <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {services.map((service, index) => (
+        {services.length > 0 ? (
+          <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {services.map((service, index) => (
             <motion.div
               key={service.id}
               initial={{ opacity: 0, y: 20 }}
@@ -179,8 +110,15 @@ export function ServicesSection({ services: apiServices = [] }: ServicesSectionP
                 </div>
               </div>
             </motion.div>
-          ))}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div className="mt-16 rounded-2xl border border-border bg-card p-8 text-center">
+            <p className="font-sans text-muted-foreground">
+              Services are loading from Elegance right now. Please check back shortly.
+            </p>
+          </div>
+        )}
 
         {/* View All Link */}
         <motion.div

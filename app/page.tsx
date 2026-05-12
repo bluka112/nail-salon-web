@@ -10,10 +10,10 @@ import { Footer } from "@/components/footer"
 import { MobileBookingButton } from "@/components/mobile-booking-button"
 import {
   getActiveBranches,
+  getActiveGalleryImages,
   getActivePromotions,
   getActiveServices,
-  getFeaturedGalleryImages,
-  getFeaturedTestimonials,
+  getActiveTestimonials,
 } from "@/lib/api"
 
 async function safeLoad<T>(loader: () => Promise<T>, fallback: T) {
@@ -27,10 +27,10 @@ async function safeLoad<T>(loader: () => Promise<T>, fallback: T) {
 export default async function HomePage() {
   const [services, branches, testimonials, galleryImages, promotions] =
     await Promise.all([
-      safeLoad(() => getActiveServices({ popular: true, limit: 8 }), []),
+      safeLoad(() => getActiveServices({ limit: 8 }), []),
       safeLoad(() => getActiveBranches(4), []),
-      safeLoad(() => getFeaturedTestimonials(4), []),
-      safeLoad(() => getFeaturedGalleryImages(6), []),
+      safeLoad(() => getActiveTestimonials({ limit: 4 }), []),
+      safeLoad(() => getActiveGalleryImages({ limit: 6 }), []),
       safeLoad(() => getActivePromotions(3), []),
     ])
 

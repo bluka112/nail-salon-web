@@ -12,7 +12,7 @@ import type {
 
 export const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL ??
-  "https://nail-salon-delta-eight.vercel.app/api"
+  "https://nail-salon-gilt.vercel.app/api"
 
 type QueryValue = string | number | boolean | undefined | null
 
@@ -33,15 +33,17 @@ async function apiFetch<T>(
   query?: Record<string, QueryValue>,
   init?: RequestInit
 ) {
+  const { headers, next: _next, ...rest } =
+    (init as RequestInit & { next?: unknown }) ?? {}
   const requestInit: RequestInit & { next?: { revalidate: number } } = {
-    ...init,
+    ...rest,
     headers: {
       "Content-Type": "application/json",
-      ...init?.headers,
+      ...(headers as Record<string, string> | undefined),
     },
   }
 
-  if (!init?.method) {
+  if (!init?.method && typeof window === "undefined") {
     requestInit.next = { revalidate: 60 }
   }
 
@@ -93,22 +95,36 @@ export async function getActiveEmployees(branchId?: string) {
   return data.employees ?? []
 }
 
-export async function getFeaturedTestimonials(limit = 4) {
+export async function getActiveTestimonials(options: {
+  limit?: number
+  featured?: boolean
+} = {}) {
   const data = await apiFetch<{
     success: boolean
     total: number
     testimonials: Testimonial[]
-  }>("/testimonials", { status: "active", featured: "true", limit })
+  }>("/testimonials", {
+    status: "active",
+    featured: options.featured ? "true" : undefined,
+    limit: options.limit ?? 4,
+  })
 
   return data.testimonials ?? []
 }
 
-export async function getFeaturedGalleryImages(limit = 6) {
+export async function getActiveGalleryImages(options: {
+  limit?: number
+  featured?: boolean
+} = {}) {
   const data = await apiFetch<{
     success: boolean
     total: number
     images: GalleryImage[]
-  }>("/gallery", { status: "active", featured: "true", limit })
+  }>("/gallery", {
+    status: "active",
+    featured: options.featured ? "true" : undefined,
+    limit: options.limit ?? 6,
+  })
 
   return data.images ?? []
 }

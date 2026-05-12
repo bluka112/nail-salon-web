@@ -16,9 +16,9 @@ const poppins = Poppins({
 })
 
 export const metadata: Metadata = {
-  title: 'Luxe Nails | Premium Nail Salon & Spa',
-  description: 'Experience luxury nail care and beauty treatments at Luxe Nails. Book your appointment for manicures, pedicures, nail art, and spa services.',
-  keywords: 'nail salon, manicure, pedicure, nail art, spa, beauty, luxury nails',
+  title: 'Elegance Nail & Spa | Naperville Nail Salon',
+  description: 'Visit Elegance Nail & Spa at 25 S Washington St, Naperville, IL 60540. Book manicures, pedicures, nail art, and spa services.',
+  keywords: 'Elegance Nail and Spa, Naperville nail salon, manicure, pedicure, nail art, spa, beauty',
 }
 
 export default function RootLayout({

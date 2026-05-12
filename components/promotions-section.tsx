@@ -12,21 +12,21 @@ const fallbackPromotions = [
     title: "First Visit Special",
     description: "Get 20% off your first service when you book online.",
     icon: Gift,
-    color: "bg-primary/10 text-primary",
+    color: "bg-primary-foreground text-primary",
   },
   {
     id: 2,
     title: "Loyalty Rewards",
     description: "Earn points with every visit and redeem for free services.",
     icon: Crown,
-    color: "bg-accent/20 text-accent-foreground",
+    color: "bg-primary-foreground text-foreground",
   },
   {
     id: 3,
     title: "Refer a Friend",
     description: "Both you and your friend get $15 off your next appointment.",
     icon: Heart,
-    color: "bg-primary/10 text-primary",
+    color: "bg-primary-foreground text-primary",
   },
 ]
 
@@ -36,9 +36,9 @@ interface PromotionsSectionProps {
 
 const promoIcons = [Gift, Crown, Heart]
 const promoColors = [
-  "bg-primary/10 text-primary",
-  "bg-accent/20 text-accent-foreground",
-  "bg-primary/10 text-primary",
+  "bg-primary-foreground text-primary",
+  "bg-primary-foreground text-foreground",
+  "bg-primary-foreground text-primary",
 ]
 
 export function PromotionsSection({ promotions: apiPromotions = [] }: PromotionsSectionProps) {
@@ -51,7 +51,7 @@ export function PromotionsSection({ promotions: apiPromotions = [] }: Promotions
             promotion.description ??
             `${promotion.discount}% off eligible services${promotion.code ? ` with code ${promotion.code}` : ""}.`,
           icon: promoIcons[index] ?? Gift,
-          color: promoColors[index] ?? "bg-primary/10 text-primary",
+          color: promoColors[index] ?? "bg-primary-foreground text-primary",
         }))
       : fallbackPromotions
 
@@ -85,14 +85,17 @@ export function PromotionsSection({ promotions: apiPromotions = [] }: Promotions
             </p>
 
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-              <Button asChild size="lg" variant="secondary" className="rounded-full px-8">
+              <Button
+                asChild
+                size="lg"
+                className="rounded-full bg-primary-foreground px-8 text-primary hover:bg-primary-foreground/90"
+              >
                 <Link href="/booking">Book Now</Link>
               </Button>
               <Button
                 asChild
                 size="lg"
-                variant="outline"
-                className="rounded-full px-8 border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
+                className="rounded-full border-2 border-primary-foreground bg-transparent px-8 text-primary-foreground hover:bg-primary-foreground hover:text-primary"
               >
                 <Link href="/rewards">Learn More</Link>
               </Button>
@@ -111,7 +114,7 @@ export function PromotionsSection({ promotions: apiPromotions = [] }: Promotions
                 className="rounded-2xl bg-primary-foreground/10 p-6 backdrop-blur-sm transition-all duration-300 hover:bg-primary-foreground/15"
               >
                 <div className="flex items-start gap-4">
-                  <div className={`flex h-12 w-12 items-center justify-center rounded-full ${promo.color}`}>
+                  <div className={`flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full shadow-sm ${promo.color}`}>
                     <promo.icon className="h-6 w-6" />
                   </div>
                   <div>

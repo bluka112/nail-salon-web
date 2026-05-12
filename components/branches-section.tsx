@@ -9,48 +9,15 @@ import type { Branch } from "@/lib/types"
 
 const fallbackBranches = [
   {
-    id: 1,
-    name: "Downtown Studio",
-    address: "123 Luxury Lane, Downtown District",
-    city: "New York, NY 10001",
-    phone: "(212) 555-0101",
+    id: "naperville",
+    name: "Elegance Nail & Spa",
+    address: "25 S Washington St",
+    city: "Naperville, IL 60540",
+    phone: "(630) 961-1111",
     rating: 4.9,
     reviews: 256,
-    hours: "Mon-Sat: 9AM - 8PM, Sun: 10AM - 6PM",
+    hours: "Mon-Sat: 9 AM - 7 PM",
     image: "https://images.unsplash.com/photo-1560066984-138dadb4c035?w=600&q=80",
-  },
-  {
-    id: 2,
-    name: "Midtown Salon",
-    address: "456 Beauty Boulevard, Midtown",
-    city: "New York, NY 10018",
-    phone: "(212) 555-0102",
-    rating: 4.8,
-    reviews: 189,
-    hours: "Mon-Sat: 10AM - 9PM, Sun: 11AM - 7PM",
-    image: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=600&q=80",
-  },
-  {
-    id: 3,
-    name: "Brooklyn Heights",
-    address: "789 Elegant Street, Brooklyn Heights",
-    city: "Brooklyn, NY 11201",
-    phone: "(718) 555-0103",
-    rating: 4.9,
-    reviews: 312,
-    hours: "Tue-Sat: 9AM - 7PM, Sun: 10AM - 5PM",
-    image: "https://images.unsplash.com/photo-1600948836101-f9ffda59d250?w=600&q=80",
-  },
-  {
-    id: 4,
-    name: "Upper East Side",
-    address: "321 Prestige Avenue, Upper East",
-    city: "New York, NY 10065",
-    phone: "(212) 555-0104",
-    rating: 5.0,
-    reviews: 428,
-    hours: "Mon-Sat: 9AM - 8PM, Sun: By Appointment",
-    image: "https://images.unsplash.com/photo-1470259078422-826894b933aa?w=600&q=80",
   },
 ]
 
@@ -97,7 +64,7 @@ export function BranchesSection({ branches: apiBranches = [] }: BranchesSectionP
             Visit Us Today
           </h2>
           <p className="mx-auto mt-4 max-w-2xl font-sans text-lg text-muted-foreground">
-            Find a Luxe Nails salon near you and experience the ultimate in nail care 
+            Visit Elegance Nail & Spa in downtown Naperville and experience the ultimate in nail care 
             and beauty services.
           </p>
         </motion.div>

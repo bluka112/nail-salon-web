@@ -34,42 +34,6 @@ import {
 } from "@/lib/api"
 import type { Branch, Employee, Service } from "@/lib/types"
 
-// Data
-const branches = [
-  { id: 1, name: "Downtown Studio", address: "123 Luxury Lane, Downtown", rating: 4.9 },
-  { id: 2, name: "Midtown Salon", address: "456 Beauty Boulevard, Midtown", rating: 4.8 },
-  { id: 3, name: "Brooklyn Heights", address: "789 Elegant Street, Brooklyn", rating: 4.9 },
-  { id: 4, name: "Upper East Side", address: "321 Prestige Avenue, Upper East", rating: 5.0 },
-  { id: 5, name: "SoHo Boutique", address: "567 Fashion Way, SoHo", rating: 4.8 },
-]
-
-const services = [
-  { id: 1, name: "Classic Manicure", duration: "30 min", price: 35 },
-  { id: 2, name: "Luxury Manicure", duration: "45 min", price: 55 },
-  { id: 3, name: "Classic Pedicure", duration: "45 min", price: 45 },
-  { id: 4, name: "Spa Pedicure", duration: "60 min", price: 65 },
-  { id: 5, name: "Gel Polish Manicure", duration: "45 min", price: 55 },
-  { id: 6, name: "Gel Extensions", duration: "75 min", price: 85 },
-  { id: 7, name: "Acrylic Full Set", duration: "90 min", price: 95 },
-  { id: 8, name: "Nail Art", duration: "30 min", price: 35 },
-  { id: 9, name: "Eyelash Extensions", duration: "120 min", price: 150 },
-]
-
-const technicians = [
-  { id: 1, name: "Any Available", specialty: "All Services", image: null },
-  { id: 2, name: "Emma Wilson", specialty: "Nail Art Specialist", image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80" },
-  { id: 3, name: "Sophia Chen", specialty: "Gel & Acrylic Expert", image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&q=80" },
-  { id: 4, name: "Isabella Martinez", specialty: "Spa Treatments", image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&q=80" },
-  { id: 5, name: "Olivia Brown", specialty: "Manicure & Pedicure", image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&q=80" },
-]
-
-const timeSlots = [
-  "9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM",
-  "12:00 PM", "12:30 PM", "1:00 PM", "1:30 PM", "2:00 PM", "2:30 PM",
-  "3:00 PM", "3:30 PM", "4:00 PM", "4:30 PM", "5:00 PM", "5:30 PM",
-  "6:00 PM", "6:30 PM", "7:00 PM",
-]
-
 const anyTechnicianId = "__any__"
 
 function toDisplayTime(time: string) {
@@ -78,19 +42,6 @@ function toDisplayTime(time: string) {
   const suffix = hour >= 12 ? "PM" : "AM"
   const displayHour = hour % 12 || 12
   return `${displayHour}:${minutes.padStart(2, "0")} ${suffix}`
-}
-
-function toApiTime(time: string) {
-  if (!time.includes(" ")) return time
-
-  const [value, period] = time.split(" ")
-  const [rawHours = "0", minutes = "00"] = value.split(":")
-  let hours = Number(rawHours)
-
-  if (period === "PM" && hours < 12) hours += 12
-  if (period === "AM" && hours === 12) hours = 0
-
-  return `${String(hours).padStart(2, "0")}:${minutes}`
 }
 
 const steps = [
@@ -115,8 +66,10 @@ function BookingContent() {
   const [selectedTime, setSelectedTime] = useState<string | null>(null)
   const [availableSlots, setAvailableSlots] = useState<string[]>([])
   const [isLoadingData, setIsLoadingData] = useState(true)
+  const [isLoadingEmployees, setIsLoadingEmployees] = useState(false)
   const [isLoadingSlots, setIsLoadingSlots] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [loadError, setLoadError] = useState<string | null>(null)
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [confirmationId, setConfirmationId] = useState<string | null>(null)
   const [customerInfo, setCustomerInfo] = useState({
@@ -126,64 +79,98 @@ function BookingContent() {
     notes: "",
   })
 
-  const branches =
-    apiBranches.length > 0
-      ? apiBranches.map((branch) => ({
-          id: branch.id,
-          name: branch.name,
-          address: branch.address,
-          rating: 5,
-        }))
-      : branchesFallback
+  const branches = apiBranches.map((branch) => ({
+    id: branch.id,
+    name: branch.name,
+    address: branch.address ?? branch.location,
+    rating: 5,
+  }))
 
-  const services =
-    apiServices.length > 0
-      ? apiServices.map((service) => ({
-          id: service.id,
-          name: service.name,
-          duration: `${service.duration} min`,
-          durationMinutes: service.duration,
-          price: service.price,
-        }))
-      : servicesFallback
+  const services = apiServices.map((service) => ({
+    id: service.id,
+    name: service.name,
+    duration: `${service.duration} min`,
+    durationMinutes: service.duration,
+    price: service.price,
+  }))
 
   const technicians = [
     { id: anyTechnicianId, name: "Any Available", specialty: "All Services", image: null },
-    ...(apiEmployees.length > 0
-      ? apiEmployees.map((employee) => ({
-          id: employee.id,
-          name: employee.name,
-          specialty: employee.title ?? employee.specialties.join(", ") ?? "Nail Technician",
-          image: employee.image,
-        }))
-      : techniciansFallback.filter((tech) => tech.id !== anyTechnicianId)),
+    ...apiEmployees.map((employee) => ({
+      id: employee.id,
+      name: employee.name,
+      specialty: employee.title || employee.specialties.join(", ") || "Nail Technician",
+      image: employee.image,
+    })),
   ]
 
-  // Generate available slots when date changes
   useEffect(() => {
-    if (selectedDate) {
-      const unavailable = new Set<string>()
-      timeSlots.forEach((slot) => {
-        if (Math.random() > 0.7) {
-          unavailable.add(slot)
-        }
+    Promise.all([getActiveBranches(50), getActiveServices({ limit: 100 })])
+      .then(([loadedBranches, loadedServices]) => {
+        setApiBranches(loadedBranches)
+        setApiServices(loadedServices)
       })
-      setAvailableSlots(timeSlots.filter((slot) => !unavailable.has(slot)))
-      setSelectedTime(null)
+      .catch(() => {
+        setApiBranches([])
+        setApiServices([])
+        setLoadError("We couldn't load booking data from the API. Please refresh and try again.")
+      })
+      .finally(() => setIsLoadingData(false))
+  }, [])
+
+  useEffect(() => {
+    setApiEmployees([])
+    setSelectedTechnician(null)
+    if (!selectedBranch) return
+
+    setIsLoadingEmployees(true)
+    getActiveEmployees(selectedBranch)
+      .then(setApiEmployees)
+      .catch(() => setApiEmployees([]))
+      .finally(() => setIsLoadingEmployees(false))
+  }, [selectedBranch])
+
+  // Load available slots when date, branch, technician, or duration changes.
+  useEffect(() => {
+    if (!selectedDate || !selectedBranch) {
+      setAvailableSlots([])
+      return
     }
-  }, [selectedDate])
+
+    const date = format(selectedDate, "yyyy-MM-dd")
+    setIsLoadingSlots(true)
+    setSelectedTime(null)
+
+    getAvailability({
+      branchId: selectedBranch,
+      date,
+      employeeId:
+        selectedTechnician && selectedTechnician !== anyTechnicianId
+          ? selectedTechnician
+          : undefined,
+      duration: getTotalDuration() || 60,
+    })
+      .then((data) => {
+        setAvailableSlots(
+          data.slots.filter((slot) => slot.available).map((slot) => slot.time)
+        )
+      })
+      .catch(() => setAvailableSlots([]))
+      .finally(() => setIsLoadingSlots(false))
+  }, [selectedDate, selectedBranch, selectedTechnician, selectedServices])
 
   // Check for branch param in URL
   useEffect(() => {
     const branchParam = searchParams.get("branch")
     if (branchParam) {
-      const branchId = parseInt(branchParam)
-      if (branches.find((b) => b.id === branchId)) {
-        setSelectedBranch(branchId)
+      const branchExists = apiBranches.some((branch) => branch.id === branchParam)
+
+      if (branchExists) {
+        setSelectedBranch(branchParam)
         setCurrentStep(2)
       }
     }
-  }, [searchParams])
+  }, [searchParams, apiBranches])
 
   const canProceed = () => {
     switch (currentStep) {
@@ -214,7 +201,7 @@ function BookingContent() {
     }
   }
 
-  const toggleService = (serviceId: number) => {
+  const toggleService = (serviceId: string) => {
     setSelectedServices((prev) =>
       prev.includes(serviceId)
         ? prev.filter((id) => id !== serviceId)
@@ -232,9 +219,40 @@ function BookingContent() {
   const getTotalDuration = () => {
     return selectedServices.reduce((total, serviceId) => {
       const service = services.find((s) => s.id === serviceId)
-      const duration = parseInt(service?.duration || "0")
-      return total + duration
+      return total + (service?.durationMinutes || 0)
     }, 0)
+  }
+
+  const handleSubmitBooking = async () => {
+    if (!canProceed() || !selectedBranch || !selectedDate || !selectedTime) return
+
+    setIsSubmitting(true)
+    setSubmitError(null)
+
+    try {
+      const response = await createBooking({
+        customerName: customerInfo.name,
+        customerEmail: customerInfo.email,
+        customerPhone: customerInfo.phone,
+        date: format(selectedDate, "yyyy-MM-dd"),
+        time: selectedTime,
+        branchId: selectedBranch,
+        employeeId:
+          selectedTechnician && selectedTechnician !== anyTechnicianId
+            ? selectedTechnician
+            : undefined,
+        services: selectedServices.map((serviceId) => ({ serviceId })),
+        notes: customerInfo.notes || undefined,
+      })
+
+      const booking = response.booking as { id?: string } | undefined
+      setConfirmationId(booking?.id ?? `LN-${Date.now()}`)
+      setCurrentStep(6)
+    } catch {
+      setSubmitError("We couldn't create your booking. Please try again.")
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -310,48 +328,63 @@ function BookingContent() {
                 </p>
               </div>
 
-              <div className="grid gap-4 sm:grid-cols-2">
-                {branches.map((branch) => (
-                  <button
-                    key={branch.id}
-                    onClick={() => setSelectedBranch(branch.id)}
-                    className={`flex items-start gap-4 rounded-2xl border-2 p-5 text-left transition-all duration-300 ${
-                      selectedBranch === branch.id
-                        ? "border-primary bg-primary/5"
-                        : "border-border hover:border-primary/50"
-                    }`}
-                  >
-                    <div
-                      className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full ${
+              {isLoadingData ? (
+                <div className="flex items-center justify-center gap-2 rounded-2xl border border-border bg-card p-8 font-sans text-muted-foreground">
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  Loading locations...
+                </div>
+              ) : loadError ? (
+                <div className="rounded-2xl border border-destructive/30 bg-destructive/10 p-8 text-center font-sans text-sm text-destructive">
+                  {loadError}
+                </div>
+              ) : branches.length > 0 ? (
+                <div className="grid gap-4 sm:grid-cols-2">
+                  {branches.map((branch) => (
+                    <button
+                      key={branch.id}
+                      onClick={() => setSelectedBranch(branch.id)}
+                      className={`flex items-start gap-4 rounded-2xl border-2 p-5 text-left transition-all duration-300 ${
                         selectedBranch === branch.id
-                          ? "bg-primary text-primary-foreground"
-                          : "bg-muted"
+                          ? "border-primary bg-primary/5"
+                          : "border-border hover:border-primary/50"
                       }`}
                     >
-                      <MapPin className="h-5 w-5" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between gap-2">
-                        <h3 className="font-sans text-lg font-semibold text-foreground truncate">
-                          {branch.name}
-                        </h3>
-                        <div className="flex items-center gap-1 flex-shrink-0">
-                          <Star className="h-4 w-4 fill-accent text-accent" />
-                          <span className="font-sans text-sm">
-                            {branch.rating}
-                          </span>
-                        </div>
+                      <div
+                        className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full ${
+                          selectedBranch === branch.id
+                            ? "bg-primary text-primary-foreground"
+                            : "bg-muted"
+                        }`}
+                      >
+                        <MapPin className="h-5 w-5" />
                       </div>
-                      <p className="mt-1 font-sans text-sm text-muted-foreground truncate">
-                        {branch.address}
-                      </p>
-                    </div>
-                    {selectedBranch === branch.id && (
-                      <Check className="h-5 w-5 text-primary flex-shrink-0" />
-                    )}
-                  </button>
-                ))}
-              </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center justify-between gap-2">
+                          <h3 className="font-sans text-lg font-semibold text-foreground truncate">
+                            {branch.name}
+                          </h3>
+                          <div className="flex items-center gap-1 flex-shrink-0">
+                            <Star className="h-4 w-4 fill-accent text-accent" />
+                            <span className="font-sans text-sm">
+                              {branch.rating}
+                            </span>
+                          </div>
+                        </div>
+                        <p className="mt-1 font-sans text-sm text-muted-foreground truncate">
+                          {branch.address}
+                        </p>
+                      </div>
+                      {selectedBranch === branch.id && (
+                        <Check className="h-5 w-5 text-primary flex-shrink-0" />
+                      )}
+                    </button>
+                  ))}
+                </div>
+              ) : (
+                <div className="rounded-2xl border border-border bg-card p-8 text-center font-sans text-muted-foreground">
+                  No active locations are available from the API right now.
+                </div>
+              )}
             </motion.div>
           )}
 
@@ -373,43 +406,54 @@ function BookingContent() {
                 </p>
               </div>
 
-              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                {services.map((service) => (
-                  <button
-                    key={service.id}
-                    onClick={() => toggleService(service.id)}
-                    className={`flex items-center justify-between rounded-2xl border-2 p-4 text-left transition-all duration-300 ${
-                      selectedServices.includes(service.id)
-                        ? "border-primary bg-primary/5"
-                        : "border-border hover:border-primary/50"
-                    }`}
-                  >
-                    <div className="flex-1 min-w-0">
-                      <h3 className="font-sans text-base font-semibold text-foreground">
-                        {service.name}
-                      </h3>
-                      <div className="mt-1 flex items-center gap-2 font-sans text-sm text-muted-foreground">
-                        <Clock className="h-3.5 w-3.5 flex-shrink-0" />
-                        <span>{service.duration}</span>
-                        <span className="text-primary font-semibold">
-                          ${service.price}
-                        </span>
-                      </div>
-                    </div>
-                    <div
-                      className={`flex h-6 w-6 items-center justify-center rounded-full border-2 transition-all flex-shrink-0 ml-2 ${
+              {isLoadingData ? (
+                <div className="flex items-center justify-center gap-2 rounded-2xl border border-border bg-card p-8 font-sans text-muted-foreground">
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  Loading services...
+                </div>
+              ) : services.length > 0 ? (
+                <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                  {services.map((service) => (
+                    <button
+                      key={service.id}
+                      onClick={() => toggleService(service.id)}
+                      className={`flex items-center justify-between rounded-2xl border-2 p-4 text-left transition-all duration-300 ${
                         selectedServices.includes(service.id)
-                          ? "border-primary bg-primary text-primary-foreground"
-                          : "border-muted-foreground/30"
+                          ? "border-primary bg-primary/5"
+                          : "border-border hover:border-primary/50"
                       }`}
                     >
-                      {selectedServices.includes(service.id) && (
-                        <Check className="h-4 w-4" />
-                      )}
-                    </div>
-                  </button>
-                ))}
-              </div>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="font-sans text-base font-semibold text-foreground">
+                          {service.name}
+                        </h3>
+                        <div className="mt-1 flex items-center gap-2 font-sans text-sm text-muted-foreground">
+                          <Clock className="h-3.5 w-3.5 flex-shrink-0" />
+                          <span>{service.duration}</span>
+                          <span className="text-primary font-semibold">
+                            ${service.price}
+                          </span>
+                        </div>
+                      </div>
+                      <div
+                        className={`flex h-6 w-6 items-center justify-center rounded-full border-2 transition-all flex-shrink-0 ml-2 ${
+                          selectedServices.includes(service.id)
+                            ? "border-primary bg-primary text-primary-foreground"
+                            : "border-muted-foreground/30"
+                        }`}
+                      >
+                        {selectedServices.includes(service.id) && (
+                          <Check className="h-4 w-4" />
+                        )}
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              ) : (
+                <div className="rounded-2xl border border-border bg-card p-8 text-center font-sans text-muted-foreground">
+                  No active services are available from the API right now.
+                </div>
+              )}
 
               {selectedServices.length > 0 && (
                 <div className="mt-6 rounded-2xl bg-secondary/50 p-4">
@@ -533,24 +577,31 @@ function BookingContent() {
                       ? `Available times for ${format(selectedDate, "MMMM d, yyyy")}`
                       : "Select a date to view available times"}
                   </h3>
-                  {selectedDate && (
+                  {selectedDate && isLoadingSlots && (
+                    <div className="flex items-center gap-2 font-sans text-sm text-muted-foreground">
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                      Loading available times...
+                    </div>
+                  )}
+                  {selectedDate && !isLoadingSlots && availableSlots.length === 0 && (
+                    <p className="font-sans text-sm text-muted-foreground">
+                      No available times for this date.
+                    </p>
+                  )}
+                  {selectedDate && !isLoadingSlots && availableSlots.length > 0 && (
                     <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
-                      {timeSlots.map((time) => {
-                        const isAvailable = availableSlots.includes(time)
+                      {availableSlots.map((time) => {
                         return (
                           <button
                             key={time}
-                            onClick={() => isAvailable && setSelectedTime(time)}
-                            disabled={!isAvailable}
+                            onClick={() => setSelectedTime(time)}
                             className={`rounded-xl px-3 py-2.5 font-sans text-sm transition-all duration-200 ${
                               selectedTime === time
                                 ? "bg-primary text-primary-foreground"
-                                : isAvailable
-                                ? "bg-secondary text-secondary-foreground hover:bg-primary/10"
-                                : "bg-muted text-muted-foreground/50 cursor-not-allowed line-through"
+                                : "bg-secondary text-secondary-foreground hover:bg-primary/10"
                             }`}
                           >
-                            {time}
+                            {toDisplayTime(time)}
                           </button>
                         )
                       })}
@@ -610,7 +661,7 @@ function BookingContent() {
                       <span className="text-muted-foreground">Date & Time</span>
                       <span className="font-medium">
                         {selectedDate && format(selectedDate, "MMM d, yyyy")} at{" "}
-                        {selectedTime}
+                        {selectedTime ? toDisplayTime(selectedTime) : ""}
                       </span>
                     </div>
                     <div className="border-t border-border pt-3 flex justify-between">
@@ -624,6 +675,11 @@ function BookingContent() {
 
                 {/* Form */}
                 <div className="space-y-4">
+                  {submitError && (
+                    <div className="rounded-xl border border-destructive/30 bg-destructive/10 px-4 py-3 font-sans text-sm text-destructive">
+                      {submitError}
+                    </div>
+                  )}
                   <div>
                     <label className="block font-sans text-sm font-medium text-foreground mb-2">
                       Full Name *
@@ -709,7 +765,9 @@ function BookingContent() {
                 <div className="space-y-4 font-sans text-sm text-left">
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Confirmation #</span>
-                    <span className="font-mono font-semibold">LN-2024-{Math.floor(Math.random() * 10000)}</span>
+                    <span className="font-mono font-semibold">
+                      {confirmationId ?? "Pending"}
+                    </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Location</span>
@@ -720,7 +778,8 @@ function BookingContent() {
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Date & Time</span>
                     <span className="font-medium">
-                      {selectedDate && format(selectedDate, "MMMM d, yyyy")} at {selectedTime}
+                      {selectedDate && format(selectedDate, "MMMM d, yyyy")} at{" "}
+                      {selectedTime ? toDisplayTime(selectedTime) : ""}
                     </span>
                   </div>
                   <div className="flex justify-between">
@@ -773,12 +832,21 @@ function BookingContent() {
             </Button>
 
             <Button
-              onClick={handleNext}
-              disabled={!canProceed()}
+              onClick={currentStep === 5 ? handleSubmitBooking : handleNext}
+              disabled={!canProceed() || isSubmitting}
               className="rounded-full"
             >
-              {currentStep === 5 ? "Confirm Booking" : "Continue"}
-              <ArrowRight className="ml-2 h-4 w-4" />
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Booking...
+                </>
+              ) : (
+                <>
+                  {currentStep === 5 ? "Confirm Booking" : "Continue"}
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </>
+              )}
             </Button>
           </div>
         )}
