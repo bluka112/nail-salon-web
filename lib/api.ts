@@ -17,7 +17,9 @@ export const API_BASE_URL =
 type QueryValue = string | number | boolean | undefined | null
 
 function buildUrl(path: string, query: Record<string, QueryValue> = {}) {
-  const url = new URL(`${API_BASE_URL}${path}`)
+  const baseUrl =
+    typeof window === "undefined" ? API_BASE_URL : window.location.origin + "/api"
+  const url = new URL(`${baseUrl}${path}`)
 
   Object.entries(query).forEach(([key, value]) => {
     if (value !== undefined && value !== null && value !== "") {
