@@ -28,10 +28,17 @@ async function proxyRequest(request: Request, context: RouteContext) {
     cache: "no-store",
   })
 
+  const responseHeaders = new Headers()
+  const responseContentType = response.headers.get("content-type")
+  const responseCacheControl = response.headers.get("cache-control")
+
+  if (responseContentType) responseHeaders.set("Content-Type", responseContentType)
+  if (responseCacheControl) responseHeaders.set("Cache-Control", responseCacheControl)
+
   return new Response(response.body, {
     status: response.status,
     statusText: response.statusText,
-    headers: response.headers,
+    headers: responseHeaders,
   })
 }
 
