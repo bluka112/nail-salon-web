@@ -13,9 +13,12 @@ async function proxyRequest(request: Request, context: RouteContext) {
     targetUrl.searchParams.append(key, value)
   })
 
-  const headers = new Headers(request.headers)
-  headers.set("Content-Type", "application/json")
-  headers.delete("host")
+  const headers = new Headers()
+  const contentType = request.headers.get("content-type")
+  const authorization = request.headers.get("authorization")
+
+  if (contentType) headers.set("Content-Type", contentType)
+  if (authorization) headers.set("Authorization", authorization)
 
   const hasBody = !["GET", "HEAD"].includes(request.method)
   const response = await fetch(targetUrl, {
@@ -47,4 +50,3 @@ export async function PATCH(request: Request, context: RouteContext) {
 export async function DELETE(request: Request, context: RouteContext) {
   return proxyRequest(request, context)
 }
-

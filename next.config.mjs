@@ -6,16 +6,6 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  async rewrites() {
-    return {
-      beforeFiles: [
-        {
-          source: "/api/:path*",
-          destination: "https://nail-salon-gilt.vercel.app/api/:path*",
-        },
-      ],
-    };
-  },
   async redirects() {
     return [
       {
