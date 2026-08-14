@@ -16,9 +16,9 @@ const poppins = Poppins({
 })
 
 export const metadata: Metadata = {
-  title: 'Trio Nail Studio | Naperville Nail Salon',
-  description: 'Visit Trio Nail Studio at 25 S Washington St, Naperville, IL 60540. Discover manicures, pedicures, nail art, and spa services.',
-  keywords: 'Trio Nail Studio, Naperville nail salon, manicure, pedicure, nail art, spa, beauty',
+  title: 'Trio Nail Studio | Chicago Nail Salon',
+  description: 'Visit Trio Nail Studio at 332 N Desplaines St, Chicago, IL 60661. Discover manicures, pedicures, nail art, and spa services.',
+  keywords: 'Trio Nail Studio, Chicago nail salon, manicure, pedicure, nail art, spa, beauty',
 }
 
 export default function RootLayout({

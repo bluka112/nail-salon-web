@@ -12,9 +12,9 @@ const fallbackBranches = [
   {
     id: "naperville",
     name: BRAND_NAME,
-    address: "25 S Washington St",
-    city: "Naperville, IL 60540",
-    phone: "(630) 961-1111",
+    address: "332 N Desplaines St",
+    city: "Chicago, IL 60661",
+    phone: "(312) 575-0108",
     rating: 4.9,
     reviews: 256,
     hours: "Mon-Sat: 9 AM - 7 PM",
@@ -65,7 +65,7 @@ export function BranchesSection({ branches: apiBranches = [] }: BranchesSectionP
             Visit Us Today
           </h2>
           <p className="mx-auto mt-4 max-w-2xl font-sans text-lg text-muted-foreground">
-            Visit {BRAND_NAME} in downtown Naperville and experience the ultimate in nail care 
+            Visit {BRAND_NAME} in Chicago and experience the ultimate in nail care 
             and beauty services.
           </p>
         </motion.div>

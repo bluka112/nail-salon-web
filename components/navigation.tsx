@@ -61,11 +61,11 @@ export function Navigation() {
             {/* Desktop CTA */}
             <div className="hidden items-center gap-4 md:flex">
               <a
-                href="tel:+16309611111"
+                href="tel:+13125750108"
                 className="flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-primary"
               >
                 <Phone className="h-4 w-4" />
-                <span className="font-sans">(630) 961-1111</span>
+                <span className="font-sans">(312) 575-0108</span>
               </a>
               <Button asChild className="rounded-full px-6">
                 <Link href="/services">View Services</Link>
@@ -122,11 +122,11 @@ export function Navigation() {
                 className="mt-4 flex flex-col items-center gap-4"
               >
                 <a
-                  href="tel:+16309611111"
+                  href="tel:+13125750108"
                   className="flex items-center gap-2 text-muted-foreground"
                 >
                   <Phone className="h-5 w-5" />
-                  <span>(630) 961-1111</span>
+                  <span>(312) 575-0108</span>
                 </a>
                 <a
                   href="#locations"

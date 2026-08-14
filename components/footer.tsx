@@ -25,21 +25,21 @@ export function Footer() {
           {/* Contact Info */}
           <div className="flex flex-col items-center gap-4 sm:flex-row sm:gap-8">
             <a
-              href="tel:+16309611111"
+              href="tel:+13125750108"
               className="flex items-center gap-2 text-sm text-background/80 transition-colors hover:text-primary"
             >
               <Phone className="h-4 w-4" />
-              (630) 961-1111
+              (312) 575-0108
             </a>
             <div className="hidden h-4 w-px bg-background/20 sm:block" />
             <a
-              href="https://maps.google.com/?q=25%20S%20Washington%20St%2C%20Naperville%2C%20IL%2060540"
+              href="https://maps.google.com/?q=332%20N%20Desplaines%20St%2C%20Chicago%2C%20IL%2060661"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 text-sm text-background/80 transition-colors hover:text-primary"
             >
               <MapPin className="h-4 w-4" />
-              25 S Washington St, Naperville, IL 60540
+              332 N Desplaines St, Chicago, IL 60661
             </a>
           </div>
 

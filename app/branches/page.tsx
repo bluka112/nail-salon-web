@@ -16,11 +16,11 @@ const fallbackBranches = [
   {
     id: "naperville",
     name: BRAND_NAME,
-    tagline: "Premium nail care in downtown Naperville",
-    address: "25 S Washington St",
-    area: "Downtown Naperville",
-    city: "Naperville, IL 60540",
-    phone: "(630) 961-1111",
+    tagline: "Premium nail care in Chicago",
+    address: "332 N Desplaines St",
+    area: "Chicago",
+    city: "Chicago, IL 60661",
+    phone: "(312) 575-0108",
     rating: 4.9,
     reviews: 256,
     hours: {
@@ -28,8 +28,8 @@ const fallbackBranches = [
       weekend: "Sunday hours may vary",
     },
     image: "https://images.unsplash.com/photo-1560066984-138dadb4c035?w=800&q=80",
-    features: ["LGBTQ+ Friendly", "Downtown Naperville", "Premium Services"],
-    transport: "QVF2+QQ Naperville, Illinois",
+    features: ["LGBTQ+ Friendly", "Chicago", "Premium Services"],
+    transport: "332 N Desplaines St, Chicago, IL 60661",
   },
 ]
 
@@ -108,7 +108,7 @@ export default function BranchesPage() {
             </h1>
 
             <p className="mx-auto mt-6 max-w-2xl font-sans text-lg text-muted-foreground">
-              Visit {BRAND_NAME} at 25 S Washington St in Naperville, IL. 
+              Visit {BRAND_NAME} at 332 N Desplaines St in Chicago, IL. 
               Our salon offers premium nail care, beauty services, and a welcoming experience.
             </p>
           </motion.div>
@@ -255,7 +255,7 @@ export default function BranchesPage() {
               All Locations
             </h2>
             <p className="mx-auto mt-4 max-w-xl font-sans text-lg text-muted-foreground">
-              Find {BRAND_NAME} in downtown Naperville.
+              Find {BRAND_NAME} in Chicago.
             </p>
           </motion.div>
 
