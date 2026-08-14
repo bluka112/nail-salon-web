@@ -12,27 +12,6 @@ import { BRAND_NAME, displaySalonName } from "@/lib/brand"
 import { getActiveBranches } from "@/lib/api"
 import type { Branch } from "@/lib/types"
 
-const fallbackBranches = [
-  {
-    id: "naperville",
-    name: BRAND_NAME,
-    tagline: "Premium nail care in Chicago",
-    address: "332 N Desplaines St",
-    area: "Chicago",
-    city: "Chicago, IL 60661",
-    phone: "(312) 575-0108",
-    rating: 4.9,
-    reviews: 256,
-    hours: {
-      weekday: "Mon-Sat: 9 AM - 7 PM",
-      weekend: "Sunday hours may vary",
-    },
-    image: "https://images.unsplash.com/photo-1560066984-138dadb4c035?w=800&q=80",
-    features: ["LGBTQ+ Friendly", "Chicago", "Premium Services"],
-    transport: "332 N Desplaines St, Chicago, IL 60661",
-  },
-]
-
 function formatHours(openingTime?: string, closingTime?: string) {
   if (!openingTime || !closingTime) {
     return {
@@ -48,8 +27,6 @@ function formatHours(openingTime?: string, closingTime?: string) {
 }
 
 function buildBranches(branches: Branch[]) {
-  if (branches.length === 0) return fallbackBranches
-
   return branches.map((branch) => ({
     id: branch.id,
     name: displaySalonName(branch.name),

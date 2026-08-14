@@ -8,20 +8,6 @@ import { MapPin, Clock, Star, Phone, ArrowRight } from "lucide-react"
 import { BRAND_NAME, displaySalonName } from "@/lib/brand"
 import type { Branch } from "@/lib/types"
 
-const fallbackBranches = [
-  {
-    id: "naperville",
-    name: BRAND_NAME,
-    address: "332 N Desplaines St",
-    city: "Chicago, IL 60661",
-    phone: "(312) 575-0108",
-    rating: 4.9,
-    reviews: 256,
-    hours: "Mon-Sat: 9 AM - 7 PM",
-    image: "https://images.unsplash.com/photo-1560066984-138dadb4c035?w=600&q=80",
-  },
-]
-
 interface BranchesSectionProps {
   branches?: Branch[]
 }
@@ -32,20 +18,19 @@ function formatHours(openingTime?: string, closingTime?: string) {
 }
 
 export function BranchesSection({ branches: apiBranches = [] }: BranchesSectionProps) {
-  const branches =
-    apiBranches.length > 0
-      ? apiBranches.slice(0, 4).map((branch) => ({
-          id: branch.id,
-          name: displaySalonName(branch.name),
-          address: branch.address,
-          city: branch.location,
-          phone: branch.phoneNumber,
-          rating: 5,
-          reviews: branch._count?.bookings ?? 0,
-          hours: formatHours(branch.openingTime, branch.closingTime),
-          image: branch.image ?? "/placeholder.jpg",
-        }))
-      : fallbackBranches
+  if (apiBranches.length === 0) return null
+
+  const branches = apiBranches.slice(0, 4).map((branch) => ({
+    id: branch.id,
+    name: displaySalonName(branch.name),
+    address: branch.address,
+    city: branch.location,
+    phone: branch.phoneNumber,
+    rating: 5,
+    reviews: branch._count?.bookings ?? 0,
+    hours: formatHours(branch.openingTime, branch.closingTime),
+    image: branch.image ?? "/placeholder.jpg",
+  }))
 
   return (
     <section className="py-24 bg-secondary/30" id="locations">

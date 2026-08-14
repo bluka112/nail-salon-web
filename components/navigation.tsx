@@ -67,8 +67,8 @@ export function Navigation() {
                 <Phone className="h-4 w-4" />
                 <span className="font-sans">(312) 575-0108</span>
               </a>
-              <Button asChild className="rounded-full px-6">
-                <Link href="/services">View Services</Link>
+              <Button type="button" className="rounded-full px-6">
+                Book Appointment
               </Button>
             </div>
 
