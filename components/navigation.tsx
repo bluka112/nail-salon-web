@@ -67,8 +67,14 @@ export function Navigation() {
                 <Phone className="h-4 w-4" />
                 <span className="font-sans">(312) 575-0108</span>
               </a>
-              <Button type="button" className="rounded-full px-6">
-                Book Appointment
+              <Button asChild className="rounded-full px-6">
+                <a
+                  href="https://www.fresha.com/a/trio-nail-studio-transitioning-to-elegance-nail-spa-tanning-chicago-332-north-desplaines-street-ik9njzmw/all-offer?menu=true&share=true&pId=2877307"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Book Appointment
+                </a>
               </Button>
             </div>
 
