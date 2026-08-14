@@ -138,14 +138,6 @@ export function BranchesSection({ branches: apiBranches = [] }: BranchesSectionP
                     </div>
                   </div>
 
-                  <div className="mt-6">
-                    <Button asChild className="w-full rounded-full">
-                      <Link href={`/booking?branch=${branch.id}`} className="flex items-center justify-center gap-2">
-                        Book This Location
-                        <ArrowRight className="h-4 w-4" />
-                      </Link>
-                    </Button>
-                  </div>
                 </div>
               </div>
             </motion.div>

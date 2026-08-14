@@ -10,7 +10,7 @@ const fallbackPromotions = [
   {
     id: 1,
     title: "First Visit Special",
-    description: "Get 20% off your first service when you book online.",
+    description: "Get 20% off your first service.",
     icon: Gift,
     color: "bg-primary-foreground text-primary",
   },
@@ -24,7 +24,7 @@ const fallbackPromotions = [
   {
     id: 3,
     title: "Refer a Friend",
-    description: "Both you and your friend get $15 off your next appointment.",
+    description: "Both you and your friend get $15 off your next visit.",
     icon: Heart,
     color: "bg-primary-foreground text-primary",
   },
@@ -81,17 +81,10 @@ export function PromotionsSection({ promotions: apiPromotions = [] }: Promotions
 
             <p className="mt-6 font-sans text-lg leading-relaxed text-primary-foreground/80">
               Join our rewards program and enjoy exclusive benefits, 
-              special discounts, and priority booking for our premium services.
+              special discounts, and premium service perks.
             </p>
 
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-              <Button
-                asChild
-                size="lg"
-                className="rounded-full bg-primary-foreground px-8 text-primary hover:bg-primary-foreground/90"
-              >
-                <Link href="/booking">Book Now</Link>
-              </Button>
               <Button
                 asChild
                 size="lg"

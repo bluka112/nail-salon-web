@@ -6,7 +6,6 @@ import Link from "next/link"
 import Image from "next/image"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
-import { MobileBookingButton } from "@/components/mobile-booking-button"
 import { Button } from "@/components/ui/button"
 import { MapPin, Clock, Star, Phone, ArrowRight, Car, Train } from "lucide-react"
 import { BRAND_NAME, displaySalonName } from "@/lib/brand"
@@ -29,7 +28,7 @@ const fallbackBranches = [
       weekend: "Sunday hours may vary",
     },
     image: "https://images.unsplash.com/photo-1560066984-138dadb4c035?w=800&q=80",
-    features: ["LGBTQ+ Friendly", "Downtown Naperville", "Online Booking", "Premium Services"],
+    features: ["LGBTQ+ Friendly", "Downtown Naperville", "Premium Services"],
     transport: "QVF2+QQ Naperville, Illinois",
   },
 ]
@@ -44,7 +43,7 @@ function formatHours(openingTime?: string, closingTime?: string) {
 
   return {
     weekday: `Mon-Sat: ${openingTime} - ${closingTime}`,
-    weekend: "Sun: By Appointment Only",
+    weekend: "Sun: Contact salon for availability",
   }
 }
 
@@ -63,7 +62,7 @@ function buildBranches(branches: Branch[]) {
     reviews: branch._count?.bookings ?? 0,
     hours: formatHours(branch.openingTime, branch.closingTime),
     image: branch.image ?? "/placeholder.jpg",
-    features: ["Premium Services", "Expert Technicians", "Online Booking"],
+    features: ["Premium Services", "Expert Technicians"],
     transport: "Open maps for directions",
   }))
 }
@@ -217,14 +216,7 @@ export default function BranchesPage() {
                           </div>
                         </div>
 
-                        {/* CTA */}
                         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                          <Button asChild className="rounded-full flex-1 sm:flex-none">
-                            <Link href={`/booking?branch=${branch.id}`} className="flex items-center justify-center gap-2">
-                              Book This Location
-                              <ArrowRight className="h-4 w-4" />
-                            </Link>
-                          </Button>
                           <Button asChild variant="outline" className="rounded-full flex-1 sm:flex-none">
                             <a
                               href={`https://maps.google.com/?q=${encodeURIComponent(
@@ -288,7 +280,6 @@ export default function BranchesPage() {
       </section>
 
       <Footer />
-      <MobileBookingButton />
     </main>
   )
 }

@@ -17,7 +17,7 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
   title: 'Trio Nail Studio | Naperville Nail Salon',
-  description: 'Visit Trio Nail Studio at 25 S Washington St, Naperville, IL 60540. Book manicures, pedicures, nail art, and spa services.',
+  description: 'Visit Trio Nail Studio at 25 S Washington St, Naperville, IL 60540. Discover manicures, pedicures, nail art, and spa services.',
   keywords: 'Trio Nail Studio, Naperville nail salon, manicure, pedicure, nail art, spa, beauty',
 }
 

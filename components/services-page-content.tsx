@@ -5,7 +5,6 @@ import Image from "next/image"
 import Link from "next/link"
 import { ArrowRight, Clock, Sparkles, Star } from "lucide-react"
 import { Footer } from "@/components/footer"
-import { MobileBookingButton } from "@/components/mobile-booking-button"
 import { Navigation } from "@/components/navigation"
 import { Button } from "@/components/ui/button"
 import type { Service, ServiceCategory } from "@/lib/types"
@@ -155,12 +154,6 @@ export function ServicesPageContent({ services }: ServicesPageContentProps) {
                               </span>
                             </div>
 
-                            <Button asChild size="sm" className="rounded-full">
-                              <Link href="/booking" className="flex items-center gap-2">
-                                Book Now
-                                <ArrowRight className="h-4 w-4" />
-                              </Link>
-                            </Button>
                           </div>
                         </div>
                       </div>
@@ -176,7 +169,7 @@ export function ServicesPageContent({ services }: ServicesPageContentProps) {
               </h2>
               <p className="mx-auto mt-3 max-w-xl font-sans text-muted-foreground">
                 We could not load Trio Nail Studio services from the API. Please try again shortly
-                or call the salon to book.
+                or call the salon for details.
               </p>
             </div>
           )}
@@ -200,13 +193,9 @@ export function ServicesPageContent({ services }: ServicesPageContentProps) {
               Ready to Experience Luxury?
             </h2>
             <p className="mx-auto mt-4 max-w-xl font-sans text-lg text-muted-foreground">
-              Book your appointment today and let our expert technicians
-              transform your nails into works of art.
+              Explore our services and let our expert technicians transform your nails into works of art.
             </p>
             <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-              <Button asChild size="lg" className="rounded-full px-8">
-                <Link href="/booking">Book Your Appointment</Link>
-              </Button>
               <Button asChild variant="outline" size="lg" className="rounded-full px-8">
                 <Link href="/branches">Find a Location</Link>
               </Button>
@@ -216,7 +205,6 @@ export function ServicesPageContent({ services }: ServicesPageContentProps) {
       </section>
 
       <Footer />
-      <MobileBookingButton />
     </main>
   )
 }

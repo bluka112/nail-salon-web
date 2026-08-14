@@ -10,7 +10,6 @@ const navLinks = [
   { href: "/", label: "Home" },
   { href: "/services", label: "Services" },
   { href: "/branches", label: "Locations" },
-  { href: "/booking", label: "Book Now" },
 ]
 
 export function Navigation() {
@@ -69,7 +68,7 @@ export function Navigation() {
                 <span className="font-sans">(630) 961-1111</span>
               </a>
               <Button asChild className="rounded-full px-6">
-                <Link href="/booking">Book Appointment</Link>
+                <Link href="/services">View Services</Link>
               </Button>
             </div>
 

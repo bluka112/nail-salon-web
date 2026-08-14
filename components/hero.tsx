@@ -4,7 +4,7 @@ import { motion } from "framer-motion"
 import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { Calendar, Sparkles } from "lucide-react"
+import { Sparkles } from "lucide-react"
 
 export function Hero() {
   return (
@@ -62,12 +62,6 @@ export function Hero() {
               transition={{ delay: 0.5, duration: 0.6 }}
               className="mt-10 flex flex-col items-center gap-4 sm:flex-row lg:justify-start justify-center"
             >
-              <Button asChild size="lg" className="rounded-full px-8 py-6 text-base">
-                <Link href="/booking" className="flex items-center gap-2">
-                  <Calendar className="h-5 w-5" />
-                  Book Appointment
-                </Link>
-              </Button>
               <Button asChild variant="outline" size="lg" className="rounded-full px-8 py-6 text-base">
                 <Link href="/services">Explore Services</Link>
               </Button>

@@ -7,7 +7,6 @@ import { GallerySection } from "@/components/gallery-section"
 import { PromotionsSection } from "@/components/promotions-section"
 import { FaqSection } from "@/components/faq-section"
 import { Footer } from "@/components/footer"
-import { MobileBookingButton } from "@/components/mobile-booking-button"
 import {
   getActiveBranches,
   getActiveGalleryImages,
@@ -45,7 +44,6 @@ export default async function HomePage() {
       <PromotionsSection promotions={promotions} />
       <FaqSection />
       <Footer />
-      <MobileBookingButton />
     </main>
   )
 }

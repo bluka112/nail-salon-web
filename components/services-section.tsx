@@ -75,15 +75,6 @@ export function ServicesSection({ services: apiServices = [] }: ServicesSectionP
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                   
-                  {/* Hover CTA */}
-                  <div className="absolute inset-0 flex items-end justify-center p-4 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-                    <Button asChild size="sm" className="rounded-full">
-                      <Link href="/booking" className="flex items-center gap-2">
-                        Book Now
-                        <ArrowRight className="h-4 w-4" />
-                      </Link>
-                    </Button>
-                  </div>
                 </div>
 
                 {/* Content */}

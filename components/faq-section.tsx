@@ -11,36 +11,12 @@ import {
 const faqs = [
   {
     id: "1",
-    question: "How do I book an appointment?",
-    answer:
-      "You can easily book an appointment through our website by clicking the 'Book Now' button, or call any of our locations directly. We recommend booking 24-48 hours in advance for the best availability.",
-  },
-  {
-    id: "2",
-    question: "What should I do before my appointment?",
-    answer:
-      "We recommend arriving 5-10 minutes early to check in and relax. Please remove any existing nail polish before your appointment. If you have any allergies or sensitivities, let us know when booking.",
-  },
-  {
-    id: "3",
     question: "How long do gel nails last?",
     answer:
       "With proper care, gel nails typically last 2-3 weeks without chipping. We recommend scheduling a fill or new set every 2-3 weeks to maintain their appearance and the health of your natural nails.",
   },
   {
-    id: "4",
-    question: "Do you offer bridal or group packages?",
-    answer:
-      "Yes! We love hosting bridal parties and special group events. We offer customized packages for weddings, birthdays, and corporate events. Contact us for a personalized quote and to reserve your date.",
-  },
-  {
-    id: "5",
-    question: "What is your cancellation policy?",
-    answer:
-      "We understand plans change. We request at least 24 hours notice for cancellations or rescheduling. Late cancellations or no-shows may be subject to a fee equal to 50% of the service cost.",
-  },
-  {
-    id: "6",
+    id: "2",
     question: "Are your products safe and cruelty-free?",
     answer:
       "Absolutely! We use only premium, salon-grade products that are free from harmful chemicals. All our products are cruelty-free and many are vegan-friendly. Ask your technician about specific product ingredients.",
