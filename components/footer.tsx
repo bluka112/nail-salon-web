@@ -19,7 +19,7 @@ export function Footer() {
         <div className="flex flex-col items-center gap-10">
           {/* Brand */}
           <Link href="/" className="inline-block">
-            <span className="text-3xl font-semibold tracking-tight">Elegance</span>
+            <span className="text-3xl font-semibold tracking-tight">Trio Nail Studio</span>
           </Link>
 
           {/* Contact Info */}
@@ -61,7 +61,7 @@ export function Footer() {
 
           {/* Copyright */}
           <p className="text-sm text-background/50">
-            &copy; {new Date().getFullYear()} Elegance. All rights reserved.
+            &copy; {new Date().getFullYear()} Trio Nail Studio. All rights reserved.
           </p>
         </div>
       </div>

@@ -88,7 +88,7 @@ export function GallerySection({ images: apiImages = [] }: GallerySectionProps) 
         ) : (
           <div className="mt-16 rounded-2xl border border-border bg-card p-8 text-center">
             <p className="font-sans text-muted-foreground">
-              Gallery images are loading from Elegance right now. Please check back shortly.
+              Gallery images are loading from Trio Nail Studio right now. Please check back shortly.
             </p>
           </div>
         )}

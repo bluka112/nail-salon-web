@@ -52,7 +52,7 @@ export function Hero() {
               transition={{ delay: 0.4, duration: 0.6 }}
               className="mt-6 max-w-lg font-sans text-lg leading-relaxed text-muted-foreground lg:mx-0 mx-auto"
             >
-              Indulge in a world of elegance where expert artistry meets tranquil relaxation. 
+              Indulge in a Trio Nail Studio experience where expert artistry meets tranquil relaxation. 
               Experience nail perfection at its finest.
             </motion.p>
 

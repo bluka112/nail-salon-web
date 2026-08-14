@@ -175,7 +175,7 @@ export function ServicesPageContent({ services }: ServicesPageContentProps) {
                 Services are unavailable right now
               </h2>
               <p className="mx-auto mt-3 max-w-xl font-sans text-muted-foreground">
-                We could not load Elegance services from the API. Please try again shortly
+                We could not load Trio Nail Studio services from the API. Please try again shortly
                 or call the salon to book.
               </p>
             </div>
@@ -220,4 +220,3 @@ export function ServicesPageContent({ services }: ServicesPageContentProps) {
     </main>
   )
 }
-

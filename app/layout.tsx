@@ -16,9 +16,9 @@ const poppins = Poppins({
 })
 
 export const metadata: Metadata = {
-  title: 'Elegance Nail & Spa | Naperville Nail Salon',
-  description: 'Visit Elegance Nail & Spa at 25 S Washington St, Naperville, IL 60540. Book manicures, pedicures, nail art, and spa services.',
-  keywords: 'Elegance Nail and Spa, Naperville nail salon, manicure, pedicure, nail art, spa, beauty',
+  title: 'Trio Nail Studio | Naperville Nail Salon',
+  description: 'Visit Trio Nail Studio at 25 S Washington St, Naperville, IL 60540. Book manicures, pedicures, nail art, and spa services.',
+  keywords: 'Trio Nail Studio, Naperville nail salon, manicure, pedicure, nail art, spa, beauty',
 }
 
 export default function RootLayout({

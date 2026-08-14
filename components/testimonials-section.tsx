@@ -98,7 +98,7 @@ export function TestimonialsSection({
         ) : (
           <div className="mt-16 rounded-2xl border border-border bg-card p-8 text-center">
             <p className="font-sans text-muted-foreground">
-              Testimonials are loading from Elegance right now. Please check back shortly.
+              Testimonials are loading from Trio Nail Studio right now. Please check back shortly.
             </p>
           </div>
         )}

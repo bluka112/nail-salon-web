@@ -9,13 +9,14 @@ import { Footer } from "@/components/footer"
 import { MobileBookingButton } from "@/components/mobile-booking-button"
 import { Button } from "@/components/ui/button"
 import { MapPin, Clock, Star, Phone, ArrowRight, Car, Train } from "lucide-react"
+import { BRAND_NAME, displaySalonName } from "@/lib/brand"
 import { getActiveBranches } from "@/lib/api"
 import type { Branch } from "@/lib/types"
 
 const fallbackBranches = [
   {
     id: "naperville",
-    name: "Elegance Nail & Spa",
+    name: BRAND_NAME,
     tagline: "Premium nail care in downtown Naperville",
     address: "25 S Washington St",
     area: "Downtown Naperville",
@@ -52,7 +53,7 @@ function buildBranches(branches: Branch[]) {
 
   return branches.map((branch) => ({
     id: branch.id,
-    name: branch.name,
+    name: displaySalonName(branch.name),
     tagline: `Luxury nail care in ${branch.location}`,
     address: branch.address,
     area: branch.location,
@@ -108,7 +109,7 @@ export default function BranchesPage() {
             </h1>
 
             <p className="mx-auto mt-6 max-w-2xl font-sans text-lg text-muted-foreground">
-              Visit Elegance Nail & Spa at 25 S Washington St in Naperville, IL. 
+              Visit {BRAND_NAME} at 25 S Washington St in Naperville, IL. 
               Our salon offers premium nail care, beauty services, and a welcoming experience.
             </p>
           </motion.div>
@@ -262,7 +263,7 @@ export default function BranchesPage() {
               All Locations
             </h2>
             <p className="mx-auto mt-4 max-w-xl font-sans text-lg text-muted-foreground">
-              Find Elegance Nail & Spa in downtown Naperville.
+              Find {BRAND_NAME} in downtown Naperville.
             </p>
           </motion.div>
 

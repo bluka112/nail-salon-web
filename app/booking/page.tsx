@@ -32,6 +32,7 @@ import {
   getActiveServices,
   getAvailability,
 } from "@/lib/api"
+import { displaySalonName } from "@/lib/brand"
 import type { Branch, Employee, Service } from "@/lib/types"
 
 const anyTechnicianId = "__any__"
@@ -81,7 +82,7 @@ function BookingContent() {
 
   const branches = apiBranches.map((branch) => ({
     id: branch.id,
-    name: branch.name,
+    name: displaySalonName(branch.name),
     address: branch.address ?? branch.location,
     rating: 5,
   }))

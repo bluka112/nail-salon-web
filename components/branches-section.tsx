@@ -5,12 +5,13 @@ import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { MapPin, Clock, Star, Phone, ArrowRight } from "lucide-react"
+import { BRAND_NAME, displaySalonName } from "@/lib/brand"
 import type { Branch } from "@/lib/types"
 
 const fallbackBranches = [
   {
     id: "naperville",
-    name: "Elegance Nail & Spa",
+    name: BRAND_NAME,
     address: "25 S Washington St",
     city: "Naperville, IL 60540",
     phone: "(630) 961-1111",
@@ -35,7 +36,7 @@ export function BranchesSection({ branches: apiBranches = [] }: BranchesSectionP
     apiBranches.length > 0
       ? apiBranches.slice(0, 4).map((branch) => ({
           id: branch.id,
-          name: branch.name,
+          name: displaySalonName(branch.name),
           address: branch.address,
           city: branch.location,
           phone: branch.phoneNumber,
@@ -64,7 +65,7 @@ export function BranchesSection({ branches: apiBranches = [] }: BranchesSectionP
             Visit Us Today
           </h2>
           <p className="mx-auto mt-4 max-w-2xl font-sans text-lg text-muted-foreground">
-            Visit Elegance Nail & Spa in downtown Naperville and experience the ultimate in nail care 
+            Visit {BRAND_NAME} in downtown Naperville and experience the ultimate in nail care 
             and beauty services.
           </p>
         </motion.div>

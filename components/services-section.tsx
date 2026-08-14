@@ -115,7 +115,7 @@ export function ServicesSection({ services: apiServices = [] }: ServicesSectionP
         ) : (
           <div className="mt-16 rounded-2xl border border-border bg-card p-8 text-center">
             <p className="font-sans text-muted-foreground">
-              Services are loading from Elegance right now. Please check back shortly.
+              Services are loading from Trio Nail Studio right now. Please check back shortly.
             </p>
           </div>
         )}
